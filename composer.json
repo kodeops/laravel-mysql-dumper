@@ -1,0 +1,29 @@
+{
+    "name": "kodeops/laravel-mysql-dumper",
+    "type": "library",
+    "description": "Dump and restore the contents of a MySQL database",
+    "keywords": ["kodeops", "laravel", "mysql", "dump"],
+    "homepage": "https://github.com/kodeops/laravel-mysql-dumper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kodeops",
+            "email": "hello@kodeops.io",
+            "homepage": "https://kodeops.io",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "laravel/helpers": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "kodeops\\laravel-mysql-dumper\\": "src/"
+        },
+        "files": [
+            "src/Helpers/functions.php"
+        ]
+    },
+    "minimum-stability": "dev"
+}
