@@ -6,4 +6,5 @@
 ```
  
 
-# kodeops/laravel-mysql-dumper | Dump and restore the contents of a MySQL database
+# kodeops/laravel-mysql-dumper
+## Dump and restore the contents of a MySQL database
