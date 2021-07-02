@@ -26,5 +26,12 @@
             "src/Helpers/functions.php"
         ]
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "kodeops\\LaravelMysqlDumper\\LaravelMysqlDumperServiceProvider"
+            ]
+        }
+    },
     "minimum-stability": "dev"
 }
