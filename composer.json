@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "kodeops\\laravel-mysql-dumper\\": "src/"
+            "kodeops\\LaravelMysqlDumper\\": "src/"
         },
         "files": [
             "src/Helpers/functions.php"
