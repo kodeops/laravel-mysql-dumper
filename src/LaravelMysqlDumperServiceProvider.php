@@ -3,7 +3,7 @@ namespace kodeops\LaravelMysqlDumper;
 
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Spatie\LaravelPackageTools\Package;
-use kodeops\LaravelMysqlDumper\Commands\Dumper;
+use kodeops\LaravelMysqlDumper\Commands\DumperCommand;
 
 class LaravelMysqlDumperServiceProvider extends PackageServiceProvider
 {
@@ -11,7 +11,7 @@ class LaravelMysqlDumperServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-mysql-dumper')
-            ->hasConfigFile()
-            ->hasCommand(Dumper::class);
+            //->hasConfigFile()
+            ->hasCommand(DumperCommand::class);
     }
 }

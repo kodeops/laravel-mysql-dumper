@@ -12,9 +12,9 @@ use Ifsnop\Mysqldump as IMysqldump;
 use Illuminate\Http\File as HttpFile;
 use Illuminate\Support\Facades\Storage;
 
-class Dumper extends Command
+class DumperCommand extends Command
 {
-    protected $signature = 'mysql-dumper {model?}';
+    protected $signature = 'mysql-dumper:run {model?}';
     protected $description = 'Import production database';
 
     public function handle()
