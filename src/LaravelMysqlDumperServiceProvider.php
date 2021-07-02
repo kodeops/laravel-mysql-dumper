@@ -1,5 +1,5 @@
 <?php
-namespace kodeops\LaravelMysqlDumper\Commands;
+namespace kodeops\LaravelMysqlDumper;
 
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Spatie\LaravelPackageTools\Package;
