@@ -32,11 +32,11 @@ class DumperCommand extends Command
 
             // If local database exist, create a backup
             $export = $this->export(
-                env('DBI_LOCAL_HOST'),
-                env('DBI_LOCAL_PORT'),
-                env('DBI_LOCAL_DATABASE'),
-                env('DBI_LOCAL_USERNAME'),
-                env('DBI_LOCAL_PASSWORD')
+                env('MYSQL_DUMPER_DESTINATION_HOST'),
+                env('MYSQL_DUMPER_DESTINATION_PORT'),
+                env('MYSQL_DUMPER_DESTINATION_DATABASE'),
+                env('MYSQL_DUMPER_DESTINATION_USERNAME'),
+                env('MYSQL_DUMPER_DESTINATION_PASSWORD')
             );
 
             if (! $export) {
@@ -47,19 +47,19 @@ class DumperCommand extends Command
         }
 
         $this->export(
-            env('DBI_REMOTE_HOST'),
-            env('DBI_REMOTE_PORT'),
-            env('DBI_REMOTE_DATABASE'),
-            env('DBI_REMOTE_USERNAME'),
-            env('DBI_REMOTE_PASSWORD')
+            env('MYSQL_DUMPER_SOURCE_HOST'),
+            env('MYSQL_DUMPER_SOURCE_PORT'),
+            env('MYSQL_DUMPER_SOURCE_DATABASE'),
+            env('MYSQL_DUMPER_SOURCE_USERNAME'),
+            env('MYSQL_DUMPER_SOURCE_PASSWORD')
         );
 
-        $this->comment('Importing to ' . env('DBI_LOCAL_DATABASE') . '@' .  env('DB_HOST'));
-        $command = "mysql -u ". env('DBI_LOCAL_USERNAME');
-        $command .= " -h " . env('DBI_LOCAL_HOST');
-        $command .= " -P " . env('DBI_LOCAL_PORT');
-        $command .= " -p " . env('DBI_LOCAL_DATABASE');
-        $command .= " -p" . env('DBI_LOCAL_PASSWORD') . " < {$this->export}";
+        $this->comment('Importing to ' . env('MYSQL_DUMPER_DESTINATION_DATABASE') . '@' .  env('MYSQL_DUMPER_DESTINATION_HOST'));
+        $command = "mysql -u ". env('MYSQL_DUMPER_DESTINATION_USERNAME');
+        $command .= " -h " . env('MYSQL_DUMPER_DESTINATION_HOST');
+        $command .= " -P " . env('MYSQL_DUMPER_DESTINATION_PORT');
+        $command .= " -p " . env('MYSQL_DUMPER_DESTINATION_DATABASE');
+        $command .= " -p" . env('MYSQL_DUMPER_DESTINATION_PASSWORD') . " < {$this->export}";
 
         $this->info($command);
 
@@ -86,11 +86,11 @@ class DumperCommand extends Command
 
         $valid_settings = true;
         $settings = [
-            'DBI_REMOTE_HOST', 
-            'DBI_REMOTE_PORT', 
-            'DBI_REMOTE_DATABASE', 
-            'DBI_REMOTE_USERNAME', 
-            'DBI_REMOTE_PASSWORD'
+            'MYSQL_DUMPER_SOURCE_HOST',
+            'MYSQL_DUMPER_SOURCE_PORT',
+            'MYSQL_DUMPER_SOURCE_DATABASE',
+            'MYSQL_DUMPER_SOURCE_USERNAME',
+            'MYSQL_DUMPER_SOURCE_PASSWORD'
         ];
         foreach ($settings as $setting) {
             if (is_null(env($setting))) {
@@ -118,7 +118,6 @@ class DumperCommand extends Command
     {
         $this->filename = date('Y-m-d_H-i-s') . "_{$database}@{$host}.sql";
         $this->export = storage_path("dbi/{$this->filename}");
-        $this->export = storage_path("dbi/{$this->filename}");
 
         $this->comment("Exporting to {$database} to {$this->export}...");
 
@@ -135,7 +134,7 @@ class DumperCommand extends Command
 
     private function checkIfDestionationExists($path)
     {
-        if (! config('database.connections.mysql-dumper')) {
+        if (! config('database.connections.mysql-dumper-destination')) {
             throw new LaravelMysqlDumperException("mysql-dumper database connection not found");
         }
 
