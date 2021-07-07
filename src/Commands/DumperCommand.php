@@ -11,6 +11,7 @@ use Artisan;
 use Ifsnop\Mysqldump as IMysqldump;
 use Illuminate\Http\File as HttpFile;
 use Illuminate\Support\Facades\Storage;
+use kodeops\LaravelMysqlDumper\Exceptions\LaravelMysqlDumperException;
 
 class DumperCommand extends Command
 {
@@ -134,6 +135,10 @@ class DumperCommand extends Command
 
     private function checkIfDestionationExists($path)
     {
+        if (! config('database.connections.mysql-dumper')) {
+            throw new LaravelMysqlDumperException("mysql-dumper database connection not found");
+        }
+
         $models = File::allFiles(base_path($path));
         foreach ($models as $model) {
             $content = $model->getContents();
@@ -143,7 +148,7 @@ class DumperCommand extends Command
             }
             
             $table = explode('\'', $table[1])[0];
-            if (Schema::connection('mysql-dbi')->hasTable($table)) {
+            if (Schema::connection('mysql-dumper')->hasTable($table)) {
                 $this->error($table . ' table already exists!');
                 return true;
             }
