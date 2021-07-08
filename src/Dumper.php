@@ -18,15 +18,26 @@ class Dumper
     protected $runInProduction;
     protected $dump;
     protected $connections;
+    protected $dump_path;
 
     public function __construct($runInProduction = false)
     {
         $this->runInProduction = $runInProduction;
         $this->dump = false;
         $this->connections = [];
+        $this->dump_path = storage_path('laravel-mysql-dumper');
 
         if (app()->isProduction() AND ! $this->runInProduction) {
             throw new LaravelMysqlDumperException("Production environment disabled by default");
+        }
+
+        $this->setupDumpFolder();
+    }
+
+    private function setupDumpFolder()
+    {
+        if (! File::isDirectory($this->dump_path)) {
+            File::makeDirectory($this->dump_path, 0777);
         }
     }
 
@@ -94,7 +105,7 @@ class Dumper
         $connection = $this->setupConnection('source');
 
         $filename = $filename ?? date('Y-m-d_H-i-s') . "_{$connection->getDatabase()}@{$connection->getHost()}.sql";
-        $this->dump = storage_path("laravel-mysql-dumper/{$filename}");
+        $this->dump = "{$this->dump_path}/{$filename}";
 
         $dsn = "mysql:";
         $dsn .= "host=" . $connection->getHost() . ";";
@@ -162,6 +173,10 @@ class Dumper
         // Check that required settings are available
         $this->setupConnection('source');
         $this->setupConnection('destination');
+
+        if (! $this->databaseIsEmpty()) {
+            throw new LaravelMysqlDumperException("Destination database “{$this->setupConnection('destination')->getDatabase()}” is not empty");
+        }
 
         $this->export();
         $this->import();
