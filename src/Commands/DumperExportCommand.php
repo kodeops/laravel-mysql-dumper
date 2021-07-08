@@ -11,7 +11,7 @@ class DumperExportCommand extends Command
 
     public function handle()
     {
-        (new Dumper($this->argument('force')))
-            ->export($this->argument('file'), $this->argument('upload'));
+        (new Dumper($this->option('force')))
+            ->export($this->argument('file'), $this->option('upload'));
     }
 }

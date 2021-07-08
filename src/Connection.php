@@ -1,6 +1,8 @@
 <?php
 namespace kodeops\LaravelMysqlDumper;
 
+use kodeops\LaravelMysqlDumper\Exceptions\LaravelMysqlDumperException;
+
 class Connection
 {
     protected $host;
@@ -11,11 +13,11 @@ class Connection
 
     public function __construct($host, $port, $database, $user, $password)
     {
-        $this->host = $host;
-        $this->port = $port;
-        $this->database = $database;
-        $this->user = $user;
-        $this->password = $password;
+        $this->host = $host ?? throw_if(is_null($host), LaravelMysqlDumperException::class, "Undefined host");
+        $this->port = $port ?? throw_if(is_null($port), LaravelMysqlDumperException::class, "Undefined port");
+        $this->database = $database ?? throw_if(is_null($database), LaravelMysqlDumperException::class, "Undefined database");
+        $this->user = $user ?? throw_if(is_null($user), LaravelMysqlDumperException::class, "Undefined user");
+        $this->password = $password ?? throw_if(is_null($password), LaravelMysqlDumperException::class, "Undefined password");
     }
 
     public function getHost()

@@ -11,7 +11,7 @@ class DumperImportCommand extends Command
 
     public function handle()
     {
-        (new Dumper($this->argument('force')))
-            ->import($this->argument('file'), $this->argument('check'));
+        (new Dumper($this->option('force')))
+            ->import($this->argument('file'), $this->option('check'));
     }
 }

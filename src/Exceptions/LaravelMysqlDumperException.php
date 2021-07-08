@@ -1,5 +1,5 @@
 <?php
-namespace kodeops\LaravelMysqlDumper;
+namespace kodeops\LaravelMysqlDumper\Exceptions;
 
 use Exception;
 
