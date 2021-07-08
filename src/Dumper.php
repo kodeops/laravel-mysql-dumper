@@ -70,6 +70,7 @@ class Dumper
 
     private function setConnectionDriver($location)
     {
+        // Set a runtime database driver for Laravel
         $connection = [
             'driver' => 'mysql',
             'host' => env($this->getEnvKey($location, 'HOST')),
@@ -109,8 +110,10 @@ class Dumper
         return $this;
     }
 
-    public function import()
+    public function import($dump = null)
     {
+        $this->dump = $dump ?? $this->dump;
+
         if (! $this->dump) {
             throw new LaravelMysqlDumperException("No dump was generated for import");
         }
@@ -167,5 +170,10 @@ class Dumper
     public function getConnection($location)
     {
         return $this->setupConnection($location);
+    }
+
+    public function getDump()
+    {
+        return $this->dump;
     }
 }
