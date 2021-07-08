@@ -13,7 +13,6 @@ class LaravelMysqlDumperServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-mysql-dumper')
-            //->hasConfigFile()
             ->hasCommand(DumperExportCommand::class)
             ->hasCommand(DumperImportCommand::class)
             ->hasCommand(DumperCloneCommand::class);
