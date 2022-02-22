@@ -12,7 +12,7 @@ class DumperCloneCommand extends Command
     public function handle()
     {
         $dumper = new Dumper($this->option('force'));
-        $this->comment("Starting cloning process of “{$dumper->getConnection('source')->getDatabase()}”...");
+        $this->comment("Starting cloning process of “{$dumper->getConnection('source')->getDatabase()}” from “{$dumper->getConnection('source')->getHost()}”...");
         $dumper->clone();
         $this->info("Database successfully cloned (from “{$dumper->getConnection('source')->getDatabase()}” to “{$dumper->getConnection('destination')->getDatabase()}”).");
     }
